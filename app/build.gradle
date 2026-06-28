@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
 
 android {
     namespace "com.mineradio.android"
@@ -10,11 +10,18 @@ android {
         versionCode 1
         versionName "1.0.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("release.keystore")
+            storePassword "android"
+            keyAlias "android"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -24,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.webkit:webkit:1.9.0'
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.webkit:webkit:1.9.0"
+    implementation "com.google.android.material:material:1.11.0"
 }
