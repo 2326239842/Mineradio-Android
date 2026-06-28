@@ -10,19 +10,8 @@ android {
         versionCode 1
         versionName "1.0.0"
     }
-    signingConfigs {
-        release {
-            storeFile file("release.keystore")
-            storePassword "android"
-            keyAlias "android"
-            keyPassword "android"
-        }
-    }
     buildTypes {
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled false
-        }
+        release { minifyEnabled false }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
