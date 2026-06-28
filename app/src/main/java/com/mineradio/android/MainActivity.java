@@ -67,9 +67,21 @@ public class MainActivity extends AppCompatActivity {
 
         webView = new WebView(this);
         setContentView(webView);
+        webView.setWebChromeClient(new android.webkit.WebChromeClient() {
+            @Override
+            public boolean onCreateWindow(android.webkit.WebView view, boolean isDialog, boolean isUserGesture, android.os.Message resultMsg) {
+                android.webkit.WebView newView = new android.webkit.WebView(MainActivity.this);
+                android.webkit.WebView.WebViewTransport transport = (android.webkit.WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(newView);
+                resultMsg.sendToTarget();
+                return true;
+            }
+        });
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setSupportMultipleWindows(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
@@ -136,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
             "  }," +
             "  getState: function(){return Promise.resolve({isMaximized:false,isMinimized:false,isFullscreen:!!document.fullscreenElement});}," +
             "  close: function(){/* no-op */return Promise.resolve();}," +
-            "  openNeteaseMusicLogin:function(){return Promise.resolve();}," +
+            "  openNeteaseMusicLogin:function(){if(window.open)window.open(\"https://music.163.com/#/login\");return Promise.resolve();}," +
             "  clearNeteaseMusicLogin:function(){return Promise.resolve();}," +
-            "  openQQMusicLogin:function(){return Promise.resolve();}," +
+            "  openQQMusicLogin:function(){if(window.open)window.open(\"https://y.qq.com/n/ryqq/profile\");return Promise.resolve();}," +
             "  clearQQMusicLogin:function(){return Promise.resolve();}," +
             "  openUpdateInstaller:function(){return Promise.resolve();}," +
             "  restartApp:function(){return Promise.resolve();}," +
